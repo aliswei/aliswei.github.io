@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="/docs/4.0/assets/img/favicons/favicon.ico">
+
+    <title>Dashboard Template for Bootstrap</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/dashboard/">
+
+    <!-- Bootstrap core CSS -->
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link th:href="@{/css/dashboard.css}" rel="stylesheet">
+</head>
+
+<body>
+ <div th:insert="~{common/commons::topbar}"></div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div th:replace="~{common/commons::sidebar(active='list.html')}"></div>
+
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+            <h2><a class="btn btn-sm btn-success" th:href="@{/templates/emp}">添加员工</a> </h2>
+
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+                <h1 class="h2">Dashboard</h1>
+                <div class="btn-toolbar mb-2 mb-md-0">
+                    <div class="btn-group mr-2">
+                        <button class="btn btn-sm btn-outline-secondary">Share</button>
+                        <button class="btn btn-sm btn-outline-secondary">Export</button>
+                    </div>
+                    <button class="btn btn-sm btn-outline-secondary dropdown-toggle">
+                        <span data-feather="calendar"></span>
+                        This week
+                    </button>
+                </div>
+            </div>
+
+
+
+            <h2>添加员工</h2>
+            <div class="table-responsive">
+                <form class="form-horizontal" method="post" th:action="@{/templates/emp}">
+                    <!-- 表单区域-->
+                    <fieldset>
+                        <!--表单主题-->
+                        <legend>员工添加</legend>
+                        <!-- 每一个form-group都可以自定义布局-->
+
+                        <div class="form-group">
+                            <!-- label表示文字提示标签,可以通过表单的组建的id提示-->
+                            <label class="col-md-2 control-label" for="name">用户名称</label>
+                            <div class="col-md-4">
+                                <input class="form-control" id="name" name="lastName" type="text"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <!-- label表示文字提示标签,可以通过表单的组建的id提示-->
+                            <label class="col-md-2 control-label" for="con">邮箱</label>
+                            <div class="col-md-4">
+                                <input class="form-control" id="con" name="email" type="email"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label" for="sex">性别</label>
+                            <div class="col-md-5">
+                                <div class="radio-inline">
+                                    <input type="radio" name="gender" id="sex" value="1" checked/>男
+                                </div>
+                                <div class="radio-inline">
+                                    <input type="radio" name="gender" id="sex-woman" value="0"/>女
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label" for="lock">锁定状态</label>
+                            <div class="col-md-5">
+                                <label class="checkbox-inline">
+                                    <input type="checkbox" value="lock" name="city" id="lock"/>锁定
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2" for="city">所属部门</label>
+                            <div class="col-md-4">
+                                <select id="city" class="form-control" name="department.id">
+                                    <option th:each="dept:${departments}" th:text="${dept.getDepartmentName()}" th:value="${dept.getId()}"></option>
+                                    <option value="outher">其他</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-6 col-md-offset-3">
+                                <input class="btn btn-primary" type="submit" value="提交"/>
+                                <input class="btn btn-warning" type="reset" value="重置"/>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </main>
+    </div>
+</div>
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script>window.jQuery || document.write('<script th:src="@{/js/jquery-3.2.1.slim.min.js}"><\/script>')</script>
+<script th:src="@{/js/popper.min.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+
+<!-- Icons -->
+<script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
+<script>
+    feather.replace()
+</script>
+
+<!-- Graphs -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+<script>
+    var ctx = document.getElementById("myChart");
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+            datasets: [{
+                data: [15339, 21345, 18483, 24003, 23489, 24092, 12034],
+                lineTension: 0,
+                backgroundColor: 'transparent',
+                borderColor: '#007bff',
+                borderWidth: 4,
+                pointBackgroundColor: '#007bff'
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: false
+                    }
+                }]
+            },
+            legend: {
+                display: false,
+            }
+        }
+    });
+</script>
+</body>
+</html>
